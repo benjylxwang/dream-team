@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/dream-team/static/css/main.7791554c.chunk.css",
-    "main.js": "/dream-team/static/js/main.afd1f505.chunk.js",
-    "main.js.map": "/dream-team/static/js/main.afd1f505.chunk.js.map",
+    "main.js": "/dream-team/static/js/main.924c7086.chunk.js",
+    "main.js.map": "/dream-team/static/js/main.924c7086.chunk.js.map",
     "runtime-main.js": "/dream-team/static/js/runtime-main.e9b74995.js",
     "runtime-main.js.map": "/dream-team/static/js/runtime-main.e9b74995.js.map",
     "static/js/2.42bdccac.chunk.js": "/dream-team/static/js/2.42bdccac.chunk.js",
@@ -29,6 +29,7 @@
     "static/media/junkrat.82ec0121.png": "/dream-team/static/media/junkrat.82ec0121.png",
     "static/media/kojak.2cc50b16.png": "/dream-team/static/media/kojak.2cc50b16.png",
     "static/media/logo512.a09597cd.png": "/dream-team/static/media/logo512.a09597cd.png",
+    "static/media/luca.6a730f4b.png": "/dream-team/static/media/luca.6a730f4b.png",
     "static/media/lucio.630119de.png": "/dream-team/static/media/lucio.630119de.png",
     "static/media/mei.ead4e645.png": "/dream-team/static/media/mei.ead4e645.png",
     "static/media/mercy.c2e1e8e6.png": "/dream-team/static/media/mercy.c2e1e8e6.png",
@@ -58,6 +59,6 @@
     "static/js/runtime-main.e9b74995.js",
     "static/js/2.42bdccac.chunk.js",
     "static/css/main.7791554c.chunk.css",
-    "static/js/main.afd1f505.chunk.js"
+    "static/js/main.924c7086.chunk.js"
   ]
 }

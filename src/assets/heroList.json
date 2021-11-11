@@ -1,0 +1,40 @@
+{
+  "tank": [
+    "Zarya",
+    "Wrecking Ball",
+    "Winston",
+    "Sigma",
+    "Roadhog",
+    "Reinhardt",
+    "Orisa",
+    "Dva"
+  ], 
+  "dps": [
+    "Ashe",
+    "Bastion",
+    "Cassidy",
+    "Doomfist",
+    "Echo",
+    "Genji",
+    "Hanzo",
+    "Junkrat",
+    "Mei",
+    "Reaper",
+    "Pharah",
+    "Widowmaker",
+    "Tracer",
+    "Torbjorn",
+    "Symmetra",
+    "Sombra",
+    "Soldier"
+  ],
+  "heal": [
+    "Ana",
+    "Baptiste",
+    "Brigitte",
+    "Lucio",
+    "Mercy",
+    "Moira",
+    "Zenyatta"
+  ]
+}

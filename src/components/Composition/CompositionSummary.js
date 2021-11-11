@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   detailsBox: {
       position: 'relative',
+      width: '20%'
   }
 }));
 

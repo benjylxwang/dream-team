@@ -7,7 +7,7 @@ import {
   Button,
   Fab,
 } from "@mui/material";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CompositionSummary from "../components/Composition/CompositionSummary";
 import HeroSummaryEdit from "../components/Composition/HeroSummaryEdit";
 import AddIcon from "@mui/icons-material/Add";
@@ -31,13 +31,22 @@ const modalStyle = {
 };
 
 const Compositions = (props) => {
-  let { ...others } = props;
+  let { goats, ...others } = props;
 
   const printRef = useRef();
   const [comps, setComps] = useState([]);
   const [titleMissing, setTitleMissing] = useState(false);
   const [editing, setEditing] = useState(false);
   const [editingComp, setEditingComp] = useState(null);
+  const [firstLoad, setFirstLoad] = useState(true);
+
+  useEffect(() => {
+    if (firstLoad) {
+      setFirstLoad(false);
+      loadFileData();
+    }
+  }, [firstLoad]);
+
   const handleClose = () => setEditing(false);
   const startEditing = (comp) => {
     if (comp) {
@@ -68,12 +77,17 @@ const Compositions = (props) => {
         comps[comp] = editingComp;
         handleClose();
         setEditingComp(null);
+        saveFileData();
         return;
       }
     }
 
     // Save new comp
-    setComps((old) => [...old, { ...editingComp, id: Math.random() }]);
+    setComps((old) => {
+      let newData = [...old, { ...editingComp, id: Math.random() }];
+      saveFileData(newData);
+      return newData;
+    });
     handleClose();
     setEditingComp(null);
   };
@@ -84,7 +98,10 @@ const Compositions = (props) => {
         newComps.push(comp);
       }
     }
-    setComps(newComps);
+    setComps(() => {
+      saveFileData(newComps);
+      return newComps;
+    });
   };
 
   const titleHandler = (event) => {
@@ -110,8 +127,8 @@ const Compositions = (props) => {
     let compString = localStorage.getItem("compositions");
     setComps(JSON.parse(compString));
   };
-  const saveFileData = () => {
-    localStorage.setItem("compositions", JSON.stringify(comps));
+  const saveFileData = (toSave=comps) => {
+    localStorage.setItem("compositions", JSON.stringify(toSave));
   };
 
   return (
@@ -123,17 +140,12 @@ const Compositions = (props) => {
             comp={comp}
             onEditClick={startEditing}
             onDeleteClick={handleDelete}
+            goats={goats}
           />
         ))}
       </Stack>
-      <Fab color="primary" onClick={() => startEditing(null)}>
+      <Fab color="primary" onClick={() => startEditing(null)} sx={{ marginRight: '8px'}}>
         <AddIcon />
-      </Fab>
-      <Fab color="secondary" onClick={saveFileData}>
-        <SaveIcon />
-      </Fab>
-      <Fab color="secondary" onClick={loadFileData}>
-        <OpenInBrowserIcon />
       </Fab>
       <ReactToPrint
         trigger={() => {

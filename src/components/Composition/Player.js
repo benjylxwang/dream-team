@@ -43,15 +43,18 @@ const parseName = (name) => {
 }
 
 const Player = (props) => {
-    let { player, big, className, showTitle, ...others} = props;
+    let { player, big, className, showTitle, goat, ...others} = props;
     const defImg = images.pepe;
 
     const classes = useStyles();
     let fileName = parseName(player);
 
+    let imgsrc = images[fileName] ? images[fileName] : defImg
+    imgsrc = goat ? images.goat : imgsrc;
+
     return (
         <div className={`${classes.player} ${big ? classes.playerBig : classes.playerSmall} ${className ? className : ''}`} {...others}>
-            <img src={images[fileName] ? images[fileName] : defImg} className={`${classes.playerImg}`} />
+            <img src={imgsrc} className={`${classes.playerImg}`} />
             {showTitle ? <Typography variant="h6" className={`${classes.playerTitle}`} textAlign="center">{player}</Typography> : null}
         </div>    
     );

@@ -39,13 +39,15 @@ const parseName = (name) => {
 }
 
 const Hero = (props) => {
-    let { variant, showTitle, big, className, ...others } = props;
+    let { variant, showTitle, big, goat, className, ...others } = props;
     let fileName = parseName(variant);
-
     const classes = useStyles();
+
+    let imgsrc = images[fileName] ? images[fileName] : images.unknown;
+    imgsrc = goat ? images.goat : imgsrc;
     return (
         <div className={`${classes.hero} ${big ? classes.heroBig : classes.heroSmall} ${className ? className : ''}`} {...others}>
-            <img src={images[fileName] ? images[fileName] : images.unknown} className={`${classes.heroImg} ${big ? classes.heroBig : classes.heroSmall}`}/>
+            <img src={imgsrc} className={`${classes.heroImg} ${big ? classes.heroBig : classes.heroSmall}`}/>
             {showTitle ? <Typography variant="h6" className={classes.heroTitle} textAlign="center">{variant}</Typography> : null}
         </div>
     )

@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CompositionSummary = (props) => {
-  let { comp, onEditClick, onDeleteClick, ...others } = props;
+  let { comp, onEditClick, onDeleteClick, goats, ...others } = props;
   const classes = useStyles();
 
   return (
@@ -38,12 +38,12 @@ const CompositionSummary = (props) => {
           </Stack>
         </Stack>
         <Stack direction="horizontal">
-          <HeroSummary hero={comp.tank1.hero} player={comp.tank1.player} />
-          <HeroSummary hero={comp.tank2.hero} player={comp.tank2.player} />
-          <HeroSummary hero={comp.dps1.hero} player={comp.dps1.player} />
-          <HeroSummary hero={comp.dps2.hero} player={comp.dps2.player} />
-          <HeroSummary hero={comp.heal1.hero} player={comp.heal1.player} />
-          <HeroSummary hero={comp.heal2.hero} player={comp.heal2.player} />
+          <HeroSummary hero={comp.tank1.hero} player={comp.tank1.player} goats={goats}/>
+          <HeroSummary hero={comp.tank2.hero} player={comp.tank2.player}  goats={goats}/>
+          <HeroSummary hero={comp.dps1.hero} player={comp.dps1.player} goats={goats} />
+          <HeroSummary hero={comp.dps2.hero} player={comp.dps2.player} goats={goats} />
+          <HeroSummary hero={comp.heal1.hero} player={comp.heal1.player} goats={goats} />
+          <HeroSummary hero={comp.heal2.hero} player={comp.heal2.player} goats={goats}/>
         </Stack>
       </Stack>
     </Paper>

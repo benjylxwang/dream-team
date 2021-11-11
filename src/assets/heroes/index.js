@@ -8,6 +8,7 @@ import doomfist from './doomfist.png'
 import dva from './dva.png'
 import echo from './echo.png'
 import genji from './genji.png'
+import goat from './goat.png'
 import hanzo from './hanzo.png'
 import junkrat from './junkrat.png'
 import lucio from './lucio.png'
@@ -31,4 +32,4 @@ import winston from './winston.png'
 import wrecking_ball from './wrecking_ball.png'
 import zarya from './zarya.png'
 import zenyatta from './zenyatta.png'
-export { zenyatta, zarya, wrecking_ball, winston, widowmaker, unknown, tracer, torbjorn, symmetra, sombra, soldier, sigma, roadhog, reinhardt, reaper, pharah, orisa, moira, mercy, mei, lucio, junkrat, hanzo, genji, echo, dva, doomfist, cassidy, brigitte, bastion, baptiste, ashe, ana,  };
+export { zenyatta, zarya, wrecking_ball, winston, widowmaker, unknown, tracer, torbjorn, symmetra, sombra, soldier, sigma, roadhog, reinhardt, reaper, pharah, orisa, moira, mercy, mei, lucio, junkrat, hanzo, goat, genji, echo, dva, doomfist, cassidy, brigitte, bastion, baptiste, ashe, ana,  };

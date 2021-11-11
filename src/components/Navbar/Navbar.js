@@ -1,23 +1,24 @@
 import { Link } from "react-router-dom";
-import { AppBar, Button, Toolbar, Typography } from "@mui/material";
+import { Button, Fab, Stack, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+import goat from "../../assets/logo/goat.png";
 
 const useStyles = makeStyles((theme) => ({
   navlinks: {
     display: "block",
     right: 0,
-    paddingRight: theme.spacing(2)
+    paddingRight: theme.spacing(2),
   },
   logo: {
     maxWidth: "50px",
     paddingRight: theme.spacing(1),
     position: "relative",
-    float: "left"
+    float: "left",
   },
   title: {
     position: "relative",
     float: "left",
-    paddingTop: theme.spacing(1)
+    paddingTop: theme.spacing(1),
   },
   link: {
     textDecoration: "none",
@@ -27,22 +28,25 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
     color: "black",
     left: 0,
-    paddingLeft: theme.spacing(2)
+    paddingLeft: theme.spacing(2),
   },
   appBar: {
-      backgroundColor: "white",
-      height: '50px',
-      padding: theme.spacing(1),
-      verticalAlign: 'middle',
-      position: 'relative'
+    backgroundColor: "white",
+    height: "50px",
+    padding: theme.spacing(1),
+    verticalAlign: "middle",
+    position: "sticky",
+    top:0,
+    zIndex: 1000,
+    boxShadow: '0px 5px 5px'
   },
   verticalCenter: {
     margin: 0,
-    position: 'absolute',
-    top: '50%',
-    '-ms-transform': 'translateY(-50%)',
-    transform: 'translateY(-50%)',
-  }
+    position: "absolute",
+    top: "50%",
+    "-ms-transform": "translateY(-50%)",
+    transform: "translateY(-50%)",
+  },
 }));
 
 const Navbar = (props) => {
@@ -56,6 +60,16 @@ const Navbar = (props) => {
           {props.title}
         </Typography>
       </Link>
+      <Fab variant="extended" color="secondary" onClick={props.letThereBeGoats}>
+        {props.goats ? (
+          "No more please :("
+        ) : (
+          <Stack direction="horizontal">
+            <img src={goat} style={{ maxHeight: "30px" }} />
+            <Typography textAlign="center" style={{ paddingTop: "4px", paddingLeft: "4px"}}>Let there be goats</Typography>
+          </Stack>
+        )}
+      </Fab>
       <div className={`${classes.navlinks} ${classes.verticalCenter}`}>
         {props.links.map((link) => (
           <Link to={link.link} className={classes.link} key={link.link}>

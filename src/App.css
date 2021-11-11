@@ -1,4 +1,6 @@
 .App {
+  position: relative;
+  overflow: visible;
   text-align: center;
 }
 

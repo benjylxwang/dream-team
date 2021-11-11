@@ -23,13 +23,13 @@ const useStyles = makeStyles(theme => ({
 
 
 const HeroSummary = (props) => {
-    let { hero, player, ...others} = props;
+    let { hero, player, goats, ...others} = props;
     const classes = useStyles();
 
     return (
         <div {...others} className={classes.heroSummary}>
-            <Hero variant={hero} className={classes.heroSummaryHero} />
-            <Player player={player} className={classes.heroSummaryPlayer} />
+            <Hero variant={hero} className={classes.heroSummaryHero} goat={goats}/>
+            <Player player={player} className={classes.heroSummaryPlayer} goat={goats}/>
         </div>
     )
 }

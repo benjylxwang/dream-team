@@ -1,44 +1,26 @@
-import {
-  Stack,
-  Typography,
-  Modal,
-  TextField,
-  Paper,
-  Button,
-  Fab,
-} from "@mui/material";
+import { Stack, Fab, Paper } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import CompositionSummary from "../components/Composition/CompositionSummary";
-import HeroSummaryEdit from "../components/Composition/HeroSummaryEdit";
 import AddIcon from "@mui/icons-material/Add";
 import SaveIcon from "@mui/icons-material/Save";
 import OpenInBrowserIcon from "@mui/icons-material/OpenInBrowser";
 import ReactToPrint from "react-to-print";
-import PrintIcon from '@mui/icons-material/Print';
-
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "90%",
-  minWidth: "800px",
-  maxWidth: "1280px",
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import PrintIcon from "@mui/icons-material/Print";
+import EditComposition from "../components/Composition/EditComposition";
+import SaveToServer from "../components/Composition/SaveToServer";
+import LoadFromServer from "../components/Composition/LoadFromServer";
+import { Box } from "@mui/system";
 
 const Compositions = (props) => {
   let { goats, ...others } = props;
 
   const printRef = useRef();
   const [comps, setComps] = useState([]);
-  const [titleMissing, setTitleMissing] = useState(false);
   const [editing, setEditing] = useState(false);
   const [editingComp, setEditingComp] = useState(null);
   const [firstLoad, setFirstLoad] = useState(true);
+  const [savingToServer, setSavingToServer] = useState(false);
+  const [loadingFromServer, setLoadingFromServer] = useState(false);
 
   useEffect(() => {
     if (firstLoad) {
@@ -66,17 +48,11 @@ const Compositions = (props) => {
       });
     setEditing(true);
   };
-  const handleSave = () => {
-    if (editingComp.title === "" || !editingComp.title) {
-      setTitleMissing(true);
-      return;
-    }
+  const handleSave = (editedComp) => {
     for (let comp in comps) {
-      if (comps[comp].id === editingComp.id) {
+      if (comps[comp].id === editedComp.id) {
         // Save edits
-        comps[comp] = editingComp;
-        handleClose();
-        setEditingComp(null);
+        comps[comp] = editedComp;
         saveFileData();
         return;
       }
@@ -84,12 +60,10 @@ const Compositions = (props) => {
 
     // Save new comp
     setComps((old) => {
-      let newData = [...old, { ...editingComp, id: Math.random() }];
+      let newData = [...old, { ...editedComp, id: Math.random() }];
       saveFileData(newData);
       return newData;
     });
-    handleClose();
-    setEditingComp(null);
   };
   const handleDelete = (compId) => {
     let newComps = [];
@@ -104,30 +78,16 @@ const Compositions = (props) => {
     });
   };
 
-  const titleHandler = (event) => {
-    setTitleMissing(false);
-    setEditingComp((old) => ({ ...old, title: event.target.value }));
-  };
-  const notesHandler = (event) => {
-    setEditingComp((old) => ({ ...old, notes: event.target.value }));
-  };
-  const heroHandler = (hero, position) => {
-    setEditingComp((old) => ({
-      ...old,
-      [position]: { ...old[position], hero: hero },
-    }));
-  };
-  const playerHandler = (player, position) => {
-    setEditingComp((old) => ({
-      ...old,
-      [position]: { ...old[position], player: player },
-    }));
-  };
   const loadFileData = () => {
     let compString = localStorage.getItem("compositions");
-    setComps(JSON.parse(compString));
+    let compObj = JSON.parse(compString);
+    if (compObj) {
+      setComps(compObj);
+    } else {
+      setComps([]);
+    }
   };
-  const saveFileData = (toSave=comps) => {
+  const saveFileData = (toSave = comps) => {
     localStorage.setItem("compositions", JSON.stringify(toSave));
   };
 
@@ -144,115 +104,73 @@ const Compositions = (props) => {
           />
         ))}
       </Stack>
-      <Fab color="primary" onClick={() => startEditing(null)} sx={{ marginRight: '8px'}}>
-        <AddIcon />
-      </Fab>
-      <ReactToPrint
-        trigger={() => {
-          return (
-            <Fab color="secondary">
-              <PrintIcon />
-            </Fab>
-          );
+      <Box
+        sx={{
+          position: "sticky",
+          zIndex: 1000,
+          bottom: "16px",
+          right: "16px",
+          backgroundColor: "white",
+          width: "280px",
+          marginLeft: "auto",
+          marginRight: "auto",
+          padding: '8px',
+          boxShadow: '0px 0px 5px',
+          borderRadius: '20px'
         }}
-        content={() => printRef.current}
+      >
+        <Fab
+          color="primary"
+          onClick={() => startEditing(null)}
+          sx={{ marginRight: "8px" }}
+        >
+          <AddIcon />
+        </Fab>
+        <ReactToPrint
+          trigger={() => {
+            return (
+              <Fab color="secondary" sx={{ marginRight: "8px" }}>
+                <PrintIcon />
+              </Fab>
+            );
+          }}
+          content={() => printRef.current}
+        />
+        <Fab
+          color="secondary"
+          onClick={() => setSavingToServer(true)}
+          sx={{ marginRight: "8px" }}
+        >
+          <SaveIcon />
+        </Fab>
+        <Fab
+          color="secondary"
+          onClick={() => setLoadingFromServer(true)}
+          sx={{ marginRight: "8px" }}
+        >
+          <OpenInBrowserIcon />
+        </Fab>
+      </Box>
+      <SaveToServer
+        open={savingToServer}
+        data={comps}
+        handleClose={() => setSavingToServer(false)}
       />
-      <Modal open={editing} onClose={handleClose}>
-        <Paper sx={modalStyle}>
-          {editing ? (
-            <Stack>
-              <TextField
-                label="Title"
-                variant="outlined"
-                value={editingComp.title}
-                onChange={titleHandler}
-                error={titleMissing}
-              />
-              <Stack
-                direction="horizontal"
-                sx={{ width: "100%", padding: "8px", paddingTop: "16px" }}
-              >
-                <Stack>
-                  <TextField
-                    label="Notes"
-                    multiline
-                    value={editingComp.notes}
-                    onChange={notesHandler}
-                    rows={15}
-                    size="small"
-                    sx={{ width: "100%" }}
-                  />
-                  <Stack direction="horizontal" sx={{ padding: "16px" }}>
-                    <Button
-                      variant="contained"
-                      sx={{ marginRight: "8px" }}
-                      onClick={handleSave}
-                    >
-                      Save
-                    </Button>
-                    <Button onClick={handleClose}>Cancel</Button>
-                  </Stack>
-                </Stack>
-                <Stack sx={{ width: "80%", padding: "8px" }}>
-                  <Typography variant="h5" textAlign="center">
-                    Edit Composition
-                  </Typography>
-                  <Stack direction="horizontal">
-                    <Stack sx={{ width: "33%", padding: "8px" }}>
-                      <HeroSummaryEdit
-                        summary={editingComp.tank1}
-                        position="tank1"
-                        type="tank"
-                        setHero={heroHandler}
-                        setPlayer={playerHandler}
-                      />
-                      <HeroSummaryEdit
-                        summary={editingComp.tank2}
-                        position="tank2"
-                        type="tank"
-                        setHero={heroHandler}
-                        setPlayer={playerHandler}
-                      />
-                    </Stack>
-                    <Stack sx={{ width: "33%", padding: "8px" }}>
-                      <HeroSummaryEdit
-                        summary={editingComp.dps1}
-                        position="dps1"
-                        type="dps"
-                        setHero={heroHandler}
-                        setPlayer={playerHandler}
-                      />
-                      <HeroSummaryEdit
-                        summary={editingComp.dps2}
-                        position="dps2"
-                        type="dps"
-                        setHero={heroHandler}
-                        setPlayer={playerHandler}
-                      />
-                    </Stack>
-                    <Stack sx={{ width: "33%", padding: "8px" }}>
-                      <HeroSummaryEdit
-                        summary={editingComp.heal1}
-                        position="heal1"
-                        type="heal"
-                        setHero={heroHandler}
-                        setPlayer={playerHandler}
-                      />
-                      <HeroSummaryEdit
-                        summary={editingComp.heal2}
-                        position="heal2"
-                        type="heal"
-                        setHero={heroHandler}
-                        setPlayer={playerHandler}
-                      />
-                    </Stack>
-                  </Stack>
-                </Stack>
-              </Stack>
-            </Stack>
-          ) : null}
-        </Paper>
-      </Modal>
+      <LoadFromServer
+        open={loadingFromServer}
+        handleClose={() => setLoadingFromServer(false)}
+        handleData={(data) => {
+          setComps(JSON.parse(data));
+          saveFileData(JSON.parse(data));
+        }}
+      />
+      <EditComposition
+        editing={editing}
+        editingComp={editingComp}
+        setEditingComp={setEditingComp}
+        onSave={handleSave}
+        onClose={handleClose}
+      />
     </div>
   );
 };

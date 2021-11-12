@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/dream-team/static/css/main.7791554c.chunk.css",
-    "main.js": "/dream-team/static/js/main.924c7086.chunk.js",
-    "main.js.map": "/dream-team/static/js/main.924c7086.chunk.js.map",
+    "main.js": "/dream-team/static/js/main.0727c554.chunk.js",
+    "main.js.map": "/dream-team/static/js/main.0727c554.chunk.js.map",
     "runtime-main.js": "/dream-team/static/js/runtime-main.e9b74995.js",
     "runtime-main.js.map": "/dream-team/static/js/runtime-main.e9b74995.js.map",
-    "static/js/2.42bdccac.chunk.js": "/dream-team/static/js/2.42bdccac.chunk.js",
-    "static/js/2.42bdccac.chunk.js.map": "/dream-team/static/js/2.42bdccac.chunk.js.map",
+    "static/js/2.8a733def.chunk.js": "/dream-team/static/js/2.8a733def.chunk.js",
+    "static/js/2.8a733def.chunk.js.map": "/dream-team/static/js/2.8a733def.chunk.js.map",
     "index.html": "/dream-team/index.html",
     "static/css/main.7791554c.chunk.css.map": "/dream-team/static/css/main.7791554c.chunk.css.map",
-    "static/js/2.42bdccac.chunk.js.LICENSE.txt": "/dream-team/static/js/2.42bdccac.chunk.js.LICENSE.txt",
+    "static/js/2.8a733def.chunk.js.LICENSE.txt": "/dream-team/static/js/2.8a733def.chunk.js.LICENSE.txt",
     "static/media/ana.74158c66.png": "/dream-team/static/media/ana.74158c66.png",
     "static/media/ashe.1c4335c2.png": "/dream-team/static/media/ashe.1c4335c2.png",
     "static/media/b3ng.47bcbe98.png": "/dream-team/static/media/b3ng.47bcbe98.png",
@@ -57,8 +57,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.e9b74995.js",
-    "static/js/2.42bdccac.chunk.js",
+    "static/js/2.8a733def.chunk.js",
     "static/css/main.7791554c.chunk.css",
-    "static/js/main.924c7086.chunk.js"
+    "static/js/main.0727c554.chunk.js"
   ]
 }

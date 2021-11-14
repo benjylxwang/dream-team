@@ -91,16 +91,54 @@ const Compositions = (props) => {
     localStorage.setItem("compositions", JSON.stringify(toSave));
   };
 
+  const moveCompUp = (compId) => {
+    setComps((old) => {
+      let newComps = [...old];
+      for (let i in old) {
+        let index = parseInt(i);
+        let nextComp = old[index + 1];
+        if (old.length > index + 1 && nextComp.id === compId) {
+          newComps[index] = old[index + 1];
+          newComps[index + 1] = old[index];
+          break;
+        }
+      }
+      saveFileData(newComps);
+      return newComps;
+    });
+  };
+
+  const moveCompDown = (compId) => {
+    setComps((old) => {
+      let newComps = [...old];
+      for (let i in old) {
+        let index = parseInt(i);
+        let curComp = old[index];
+        if (old.length > index + 1 && curComp.id === compId) {
+          newComps[index] = old[index + 1];
+          newComps[index + 1] = old[index];
+          break;
+        }
+      }
+      saveFileData(newComps);
+      return newComps;
+    });
+  };
+
   return (
     <div>
       <Stack {...others} ref={printRef}>
-        {comps.map((comp) => (
+        {comps.map((comp, index) => (
           <CompositionSummary
-            key={comp.title}
+            key={comp.id}
             comp={comp}
             onEditClick={startEditing}
             onDeleteClick={handleDelete}
             goats={goats}
+            isFirst={index === 0}
+            isLast={index === comps.length - 1}
+            onClickUp={moveCompUp}
+            onClickDown={moveCompDown}
           />
         ))}
       </Stack>
@@ -114,9 +152,9 @@ const Compositions = (props) => {
           width: "280px",
           marginLeft: "auto",
           marginRight: "auto",
-          padding: '8px',
-          boxShadow: '0px 0px 5px',
-          borderRadius: '20px'
+          padding: "8px",
+          boxShadow: "0px 0px 5px",
+          borderRadius: "20px",
         }}
       >
         <Fab

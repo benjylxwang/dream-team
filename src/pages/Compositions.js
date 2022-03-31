@@ -1,4 +1,4 @@
-import { Stack, Fab, Paper } from "@mui/material";
+import { Fab } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import CompositionSummary from "../components/Composition/CompositionSummary";
 import AddIcon from "@mui/icons-material/Add";
@@ -12,7 +12,7 @@ import LoadFromServer from "../components/Composition/LoadFromServer";
 import { Box } from "@mui/system";
 
 const Compositions = (props) => {
-  let { goats, ...others } = props;
+  let { goats, ow2Mode, ...others } = props;
 
   const printRef = useRef();
   const [comps, setComps] = useState([]);
@@ -127,7 +127,7 @@ const Compositions = (props) => {
 
   return (
     <div>
-      <Stack {...others} ref={printRef}>
+      <Box {...others} ref={printRef} sx={{ display: "inline-flex", flexDirection: "column", gap: 1 }}>
         {comps.map((comp, index) => (
           <CompositionSummary
             key={comp.id}
@@ -135,65 +135,50 @@ const Compositions = (props) => {
             onEditClick={startEditing}
             onDeleteClick={handleDelete}
             goats={goats}
+            ow2Mode={ow2Mode}
             isFirst={index === 0}
             isLast={index === comps.length - 1}
             onClickUp={moveCompUp}
             onClickDown={moveCompDown}
           />
         ))}
-      </Stack>
-      <Box
-        sx={{
-          position: "sticky",
-          zIndex: 1000,
-          bottom: "16px",
-          right: "16px",
-          backgroundColor: "white",
-          width: "280px",
-          marginLeft: "auto",
-          marginRight: "auto",
-          padding: "8px",
-          boxShadow: "0px 0px 5px",
-          borderRadius: "20px",
-        }}
-      >
-        <Fab
-          color="primary"
-          onClick={() => startEditing(null)}
-          sx={{ marginRight: "8px" }}
-        >
-          <AddIcon />
-        </Fab>
-        <ReactToPrint
-          trigger={() => {
-            return (
-              <Fab color="secondary" sx={{ marginRight: "8px" }}>
-                <PrintIcon />
-              </Fab>
-            );
+        <Box
+          sx={{
+            position: "sticky",
+            zIndex: 1000,
+            bottom: "16px",
+            right: "16px",
+            backgroundColor: "white",
+            width: "280px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            padding: "8px",
+            boxShadow: "0px 0px 5px",
+            borderRadius: "20px",
           }}
-          content={() => printRef.current}
-        />
-        <Fab
-          color="secondary"
-          onClick={() => setSavingToServer(true)}
-          sx={{ marginRight: "8px" }}
         >
-          <SaveIcon />
-        </Fab>
-        <Fab
-          color="secondary"
-          onClick={() => setLoadingFromServer(true)}
-          sx={{ marginRight: "8px" }}
-        >
-          <OpenInBrowserIcon />
-        </Fab>
+          <Fab color="primary" onClick={() => startEditing(null)} sx={{ marginRight: "8px" }}>
+            <AddIcon />
+          </Fab>
+          <ReactToPrint
+            trigger={() => {
+              return (
+                <Fab color="secondary" sx={{ marginRight: "8px" }}>
+                  <PrintIcon />
+                </Fab>
+              );
+            }}
+            content={() => printRef.current}
+          />
+          <Fab color="secondary" onClick={() => setSavingToServer(true)} sx={{ marginRight: "8px" }}>
+            <SaveIcon />
+          </Fab>
+          <Fab color="secondary" onClick={() => setLoadingFromServer(true)} sx={{ marginRight: "8px" }}>
+            <OpenInBrowserIcon />
+          </Fab>
+        </Box>
       </Box>
-      <SaveToServer
-        open={savingToServer}
-        data={comps}
-        handleClose={() => setSavingToServer(false)}
-      />
+      <SaveToServer open={savingToServer} data={comps} handleClose={() => setSavingToServer(false)} />
       <LoadFromServer
         open={loadingFromServer}
         handleClose={() => setLoadingFromServer(false)}
@@ -206,6 +191,7 @@ const Compositions = (props) => {
         editing={editing}
         editingComp={editingComp}
         setEditingComp={setEditingComp}
+        ow2Mode={ow2Mode}
         onSave={handleSave}
         onClose={handleClose}
       />

@@ -1,36 +1,25 @@
-import {
-  Stack,
-  Typography,
-  Modal,
-  TextField,
-  Paper,
-  Button,
-  Fab,
-} from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { Stack, Typography, Modal, TextField, Paper, Button } from "@mui/material";
+import { useState } from "react";
 import HeroSummaryEdit from "./HeroSummaryEdit";
-import AddIcon from "@mui/icons-material/Add";
-import SaveIcon from "@mui/icons-material/Save";
-import OpenInBrowserIcon from "@mui/icons-material/OpenInBrowser";
-import ReactToPrint from "react-to-print";
-import PrintIcon from "@mui/icons-material/Print";
+
+import sad_pepe from "../../assets/pepehands.png";
 
 const modalStyle = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: "90%",
-    minWidth: "800px",
-    maxWidth: "1280px",
-    bgcolor: "background.paper",
-    border: "2px solid #000",
-    boxShadow: 24,
-    p: 4,
-  };
-  
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "90%",
+  minWidth: "800px",
+  maxWidth: "1280px",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
 const EditComposition = (props) => {
-  let { editing, editingComp, setEditingComp, onSave, onClose, ...others } = props;
+  let { editing, editingComp, setEditingComp, onSave, onClose, ow2Mode, ...others } = props;
   const [titleMissing, setTitleMissing] = useState(false);
 
   const titleHandler = (event) => {
@@ -52,6 +41,18 @@ const EditComposition = (props) => {
       [position]: { ...old[position], player: player },
     }));
   };
+  const callerHandler = (caller, position) => {
+    setEditingComp((old) => ({
+      ...old,
+      [position]: { ...old[position], shotcaller: caller },
+    }));
+  };
+  const trackerHandler = (tracker, position) => {
+    setEditingComp((old) => ({
+      ...old,
+      [position]: { ...old[position], ulttracker: tracker },
+    }));
+  };
 
   const handleSave = () => {
     if (editingComp.title === "" || !editingComp.title) {
@@ -62,6 +63,14 @@ const EditComposition = (props) => {
     onClose();
     setEditingComp(null);
   };
+
+  const pepehands = (
+    <img
+      src={sad_pepe}
+      alt="PEPE HANDS"
+      style={{ filter: "grayscale(50%)", opacity: 0.5, width: "200px", transform: "translate(25%)rotate(-45deg)" }}
+    />
+  );
 
   return (
     <Modal open={editing} onClose={handleSave}>
@@ -75,10 +84,7 @@ const EditComposition = (props) => {
               onChange={titleHandler}
               error={titleMissing}
             />
-            <Stack
-              direction="horizontal"
-              sx={{ width: "100%", padding: "8px", paddingTop: "16px" }}
-            >
+            <Stack direction="horizontal" sx={{ width: "100%", padding: "8px", paddingTop: "16px" }}>
               <Stack>
                 <TextField
                   label="Notes"
@@ -90,11 +96,7 @@ const EditComposition = (props) => {
                   sx={{ width: "100%" }}
                 />
                 <Stack direction="horizontal" sx={{ padding: "16px" }}>
-                  <Button
-                    variant="contained"
-                    sx={{ marginRight: "8px" }}
-                    onClick={handleSave}
-                  >
+                  <Button variant="contained" sx={{ marginRight: "8px" }} onClick={handleSave}>
                     Save
                   </Button>
                   <Button onClick={onClose}>Cancel</Button>
@@ -112,14 +114,21 @@ const EditComposition = (props) => {
                       type="tank"
                       setHero={heroHandler}
                       setPlayer={playerHandler}
+                      setCaller={callerHandler}
+                      setTracker={trackerHandler}
                     />
-                    <HeroSummaryEdit
-                      summary={editingComp.tank2}
-                      position="tank2"
-                      type="tank"
-                      setHero={heroHandler}
-                      setPlayer={playerHandler}
-                    />
+                    {ow2Mode && pepehands}
+                    {!ow2Mode && (
+                      <HeroSummaryEdit
+                        summary={editingComp.tank2}
+                        position="tank2"
+                        type="tank"
+                        setHero={heroHandler}
+                        setPlayer={playerHandler}
+                        setCaller={callerHandler}
+                        setTracker={trackerHandler}
+                      />
+                    )}
                   </Stack>
                   <Stack sx={{ width: "33%", padding: "8px" }}>
                     <HeroSummaryEdit
@@ -128,6 +137,8 @@ const EditComposition = (props) => {
                       type="dps"
                       setHero={heroHandler}
                       setPlayer={playerHandler}
+                      setCaller={callerHandler}
+                      setTracker={trackerHandler}
                     />
                     <HeroSummaryEdit
                       summary={editingComp.dps2}
@@ -135,6 +146,8 @@ const EditComposition = (props) => {
                       type="dps"
                       setHero={heroHandler}
                       setPlayer={playerHandler}
+                      setCaller={callerHandler}
+                      setTracker={trackerHandler}
                     />
                   </Stack>
                   <Stack sx={{ width: "33%", padding: "8px" }}>
@@ -144,6 +157,8 @@ const EditComposition = (props) => {
                       type="heal"
                       setHero={heroHandler}
                       setPlayer={playerHandler}
+                      setCaller={callerHandler}
+                      setTracker={trackerHandler}
                     />
                     <HeroSummaryEdit
                       summary={editingComp.heal2}
@@ -151,6 +166,8 @@ const EditComposition = (props) => {
                       type="heal"
                       setHero={heroHandler}
                       setPlayer={playerHandler}
+                      setCaller={callerHandler}
+                      setTracker={trackerHandler}
                     />
                   </Stack>
                 </Stack>

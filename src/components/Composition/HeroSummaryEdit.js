@@ -1,10 +1,15 @@
-import { Menu, MenuItem, Modal, Paper, Select, Stack, Typography } from "@mui/material";
+import { IconButton, Menu, MenuItem, Modal, Paper, Select, Stack, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import Hero from "./Hero";
 import Player from "./Player";
 import heroList from "../../assets/heroList.json";
 import playerList from "../../assets/playerList.json";
 import { useState } from "react";
+import NewPlayer from "./NewPlayer";
+import { Box } from "@mui/system";
+
+import RecordVoiceOverIcon from "@mui/icons-material/RecordVoiceOver";
+import TrackChangesIcon from "@mui/icons-material/TrackChanges";
 
 const useStyles = makeStyles((theme) => ({
   heroSummaryEdit: {
@@ -19,22 +24,16 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   editablePlayer: {
-    position: "absolute",
-    left: 0,
-    margin: theme.spacing(1),
-    top: "25px",
+    position: "relative",
+    marginTop: "10px",
   },
   editableHero: {
-    position: "absolute",
-    right: 0,
-    margin: theme.spacing(1),
+    position: "relative",
   },
   editModalAs: {
-    position: "absolute",
-    left: "50%",
-    top: "50%",
-    "-ms-transform": "translateY(-50%) translateX(-50%)",
-    transform: "translateY(-50%) translateX(-50%)",
+    position: "relative",
+    marginRight: "auto",
+    marginLeft: "auto",
   },
 }));
 
@@ -44,7 +43,9 @@ const HeroSummaryEdit = (props) => {
   const [playerMenuAnchor, setPlayerMenuAnchor] = useState(null);
   const showPlayerMenu = Boolean(playerMenuAnchor);
 
-  let { summary, setHero, setPlayer, position, type, ...others } = props;
+  const [addingNewPlayer, setAddingNewPlayer] = useState(false);
+
+  let { summary, setHero, setPlayer, setCaller, setTracker, position, type, ...others } = props;
   const classes = useStyles();
 
   const editHero = (event) => {
@@ -56,35 +57,71 @@ const HeroSummaryEdit = (props) => {
   };
 
   const editPlayer = (event) => {
-      setPlayerMenuAnchor(event.currentTarget);
+    setPlayerMenuAnchor(event.currentTarget);
   };
   const handlePlayerSelection = (player) => {
     setPlayer(player, position);
     setPlayerMenuAnchor(null);
+    setAddingNewPlayer(false);
+  };
+
+  const handleAddNewPlayer = () => {
+    setAddingNewPlayer(true);
+    setPlayerMenuAnchor(null);
+  };
+
+  const handleSetCaller = () => {
+    let value = summary ? !summary.shotcaller : true;
+    setCaller(value, position);
+  };
+  const handleSetTracker = () => {
+    let value = summary ? !summary.ulttracker : true;
+    setTracker(value, position);
   };
 
   return (
     <div>
       <Paper className={classes.heroSummaryEdit}>
-        <Stack direction="horizontal" {...others}>
-          <Player
-            player={summary.player}
-            onClick={editPlayer}
-            showTitle
-            className={`${classes.editable} ${classes.editablePlayer}`}
-          />
-          <Menu
-            open={showPlayerMenu}
-            onClose={() => setPlayerMenuAnchor(null)}
-            anchorEl={playerMenuAnchor}
-          >
-            {playerList.sort().map((player) => (
-              <MenuItem key={player} value={player} onClick={() => handlePlayerSelection(player)}>
-                {player}
-              </MenuItem>
-            ))}
-          </Menu>
-          <Typography variant="h5" className={classes.editModalAs}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+            alignContent: "center",
+          }}
+        >
+          <Stack>
+            <Player
+              player={summary.player}
+              onClick={editPlayer}
+              showTitle
+              className={`${classes.editable} ${classes.editablePlayer}`}
+            />
+            <Box sx={{ display: "flex", gap: 1, justifyContent: "center", alignItems: "center" }}>
+              <IconButton
+                color={summary && summary.shotcaller ? "secondary" : "default"}
+                onClick={handleSetCaller}
+              >
+                <RecordVoiceOverIcon />
+              </IconButton>
+              <IconButton
+                color={summary && summary.ulttracker ? "secondary" : "default"}
+                onClick={handleSetTracker}
+              >
+                <TrackChangesIcon />
+              </IconButton>
+            </Box>
+            <Menu open={showPlayerMenu} onClose={() => setPlayerMenuAnchor(null)} anchorEl={playerMenuAnchor}>
+              {playerList.sort().map((player) => (
+                <MenuItem key={player} value={player} onClick={() => handlePlayerSelection(player)}>
+                  {player}
+                </MenuItem>
+              ))}
+              <MenuItem onClick={() => handleAddNewPlayer()}>+ New Player</MenuItem>
+            </Menu>
+          </Stack>
+          <Typography variant="h5" className={classes.editModalAs} sx={{ flex: 1 }}>
             as
           </Typography>
           <Hero
@@ -93,19 +130,16 @@ const HeroSummaryEdit = (props) => {
             onClick={editHero}
             className={`${classes.editable} ${classes.editableHero}`}
           />
-          <Menu
-            open={showHeroMenu}
-            onClose={() => setHeroMenuAnchor(null)}
-            anchorEl={heroMenuAnchor}
-          >
+          <Menu open={showHeroMenu} onClose={() => setHeroMenuAnchor(null)} anchorEl={heroMenuAnchor}>
             {heroList[type].sort().map((hero) => (
               <MenuItem key={hero} value={hero} onClick={() => handleHeroSelection(hero)}>
                 {hero}
               </MenuItem>
             ))}
           </Menu>
-        </Stack>
+        </Box>
       </Paper>
+      <NewPlayer editing={addingNewPlayer} onCancel={() => setAddingNewPlayer(false)} onSave={handlePlayerSelection} />
     </div>
   );
 };

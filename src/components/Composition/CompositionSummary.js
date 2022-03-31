@@ -1,4 +1,4 @@
-import { Button, Divider, Paper, Stack, Typography } from "@mui/material";
+import { Box, Button, Divider, Paper, Stack, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import HeroSummary from "./HeroSummary";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
@@ -6,14 +6,11 @@ import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
 const useStyles = makeStyles((theme) => ({
   compositionSummary: {
-    marginBottom: theme.spacing(1),
     padding: theme.spacing(1),
-    position: "relative",
   },
   compositionTitle: {
     paddingTop: theme.spacing(2),
   },
-  buttonBar: {},
   detailsBox: {
     position: "relative",
     width: "20%",
@@ -21,22 +18,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CompositionSummary = (props) => {
-  let {
-    comp,
-    onEditClick,
-    onDeleteClick,
-    goats,
-    isFirst,
-    isLast,
-    onClickUp,
-    onClickDown,
-    ...others
-  } = props;
+  let { comp, onEditClick, onDeleteClick, goats, isFirst, isLast, onClickUp, onClickDown, ow2Mode, ...others } = props;
   const classes = useStyles();
 
   return (
     <Paper {...others} className={classes.compositionSummary}>
-      <Stack direction="horizontal">
+      <Box sx={{ display: "flex", gap: 1 }}>
         <Stack className={classes.detailsBox}>
           <Typography variant="h4" className={classes.compositionTitle}>
             {comp.title}
@@ -56,39 +43,15 @@ const CompositionSummary = (props) => {
             </Button>
           </Stack>
         </Stack>
-        <Stack direction="horizontal">
-          <HeroSummary
-            hero={comp.tank1.hero}
-            player={comp.tank1.player}
-            goats={goats}
-          />
-          <HeroSummary
-            hero={comp.tank2.hero}
-            player={comp.tank2.player}
-            goats={goats}
-          />
-          <HeroSummary
-            hero={comp.dps1.hero}
-            player={comp.dps1.player}
-            goats={goats}
-          />
-          <HeroSummary
-            hero={comp.dps2.hero}
-            player={comp.dps2.player}
-            goats={goats}
-          />
-          <HeroSummary
-            hero={comp.heal1.hero}
-            player={comp.heal1.player}
-            goats={goats}
-          />
-          <HeroSummary
-            hero={comp.heal2.hero}
-            player={comp.heal2.player}
-            goats={goats}
-          />
-        </Stack>
-      </Stack>
+        <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+          <HeroSummary summary={comp.tank1} goats={goats} />
+          {!ow2Mode && <HeroSummary summary={comp.tank2} goats={goats} />}
+          <HeroSummary summary={comp.dps1} goats={goats} />
+          <HeroSummary summary={comp.dps2} goats={goats} />
+          <HeroSummary summary={comp.heal1} goats={goats} />
+          <HeroSummary summary={comp.heal2} goats={goats} />
+        </Box>
+      </Box>
     </Paper>
   );
 };

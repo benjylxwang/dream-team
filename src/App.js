@@ -13,12 +13,13 @@ const theme = createTheme();
 
 function App() {
   const [goats, setGoats] = useState(false);
+  const [ow2Mode, setOW2Mode] = useState(Date.now() > new Date(2022, 4, 26));
 
   const MENU_LINKS = [
     {
       label: "Compositions",
       link: "/compositions",
-      element: <Compositions goats={goats} />,
+      element: <Compositions goats={goats} ow2Mode={ow2Mode} />,
     },
   ];
 
@@ -38,19 +39,16 @@ function App() {
             logo={goats ? goat : logo512}
             links={MENU_LINKS}
             letThereBeGoats={() => setGoats(!goats)}
+            toggleOw2Mode={() => setOW2Mode(!ow2Mode)}
             goats={goats}
+            ow2Mode={ow2Mode}
           />
 
           <div className="content">
             <Routes>
               <Route path="/" element={<Home goats={goats} />} />
               {MENU_LINKS.map((link) => (
-                <Route
-                  path={link.link}
-                  id={link.link}
-                  element={link.element}
-                  key={link.link}
-                />
+                <Route path={link.link} id={link.link} element={link.element} key={link.link} />
               ))}
             </Routes>
           </div>

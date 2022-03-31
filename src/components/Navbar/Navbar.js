@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { Button, Fab, Stack, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import goat from "../../assets/logo/goat.png";
+import ow2Logo from "../../assets/logo/ow2.png";
+import { Box } from "@mui/system";
 
 const useStyles = makeStyles((theme) => ({
   navlinks: {
@@ -36,9 +38,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     verticalAlign: "middle",
     position: "sticky",
-    top:0,
+    top: 0,
     zIndex: 1000,
-    boxShadow: '0px 5px 5px'
+    boxShadow: "0px 5px 5px",
   },
   verticalCenter: {
     margin: 0,
@@ -60,16 +62,23 @@ const Navbar = (props) => {
           {props.title}
         </Typography>
       </Link>
-      <Fab variant="extended" color="secondary" onClick={props.letThereBeGoats}>
-        {props.goats ? (
-          "No more please :("
-        ) : (
-          <Stack direction="horizontal">
-            <img src={goat} style={{ maxHeight: "30px" }} />
-            <Typography textAlign="center" style={{ paddingTop: "4px", paddingLeft: "4px"}}>Let there be goats</Typography>
-          </Stack>
-        )}
-      </Fab>
+      <Box sx={{ display: "flex", gap: 1, justifyContent: "center" }}>
+        <Fab variant="extended" color="white" onClick={props.toggleOw2Mode}>
+          {props.ow2Mode ? (
+            "Back to OW1"
+          ) : (
+            <Stack direction="horizontal">
+              <img src={ow2Logo} style={{ maxHeight: "30px" }} />
+              <Typography variant="subtitle1" textAlign="center" style={{ paddingTop: "2px", paddingLeft: "4px" }}>
+                Overwatch 2
+              </Typography>
+            </Stack>
+          )}
+        </Fab>
+        <Fab color={props.goats ? "disabled" : "secondary"} onClick={props.letThereBeGoats}>
+          <img src={goat} style={{ maxHeight: "30px" }} />
+        </Fab>
+      </Box>
       <div className={`${classes.navlinks} ${classes.verticalCenter}`}>
         {props.links.map((link) => (
           <Link to={link.link} className={classes.link} key={link.link}>

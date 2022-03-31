@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/dream-team/static/css/main.2d455af6.chunk.css",
-    "main.js": "/dream-team/static/js/main.dedaa7b4.chunk.js",
-    "main.js.map": "/dream-team/static/js/main.dedaa7b4.chunk.js.map",
+    "main.js": "/dream-team/static/js/main.d0b181a6.chunk.js",
+    "main.js.map": "/dream-team/static/js/main.d0b181a6.chunk.js.map",
     "runtime-main.js": "/dream-team/static/js/runtime-main.e9b74995.js",
     "runtime-main.js.map": "/dream-team/static/js/runtime-main.e9b74995.js.map",
-    "static/js/2.66feda2e.chunk.js": "/dream-team/static/js/2.66feda2e.chunk.js",
-    "static/js/2.66feda2e.chunk.js.map": "/dream-team/static/js/2.66feda2e.chunk.js.map",
+    "static/js/2.230e3bf2.chunk.js": "/dream-team/static/js/2.230e3bf2.chunk.js",
+    "static/js/2.230e3bf2.chunk.js.map": "/dream-team/static/js/2.230e3bf2.chunk.js.map",
     "index.html": "/dream-team/index.html",
     "static/css/main.2d455af6.chunk.css.map": "/dream-team/static/css/main.2d455af6.chunk.css.map",
-    "static/js/2.66feda2e.chunk.js.LICENSE.txt": "/dream-team/static/js/2.66feda2e.chunk.js.LICENSE.txt",
+    "static/js/2.230e3bf2.chunk.js.LICENSE.txt": "/dream-team/static/js/2.230e3bf2.chunk.js.LICENSE.txt",
     "static/media/ana.74158c66.png": "/dream-team/static/media/ana.74158c66.png",
     "static/media/ashe.1c4335c2.png": "/dream-team/static/media/ashe.1c4335c2.png",
     "static/media/b3ng.47bcbe98.png": "/dream-team/static/media/b3ng.47bcbe98.png",
@@ -35,7 +35,9 @@
     "static/media/mercy.c2e1e8e6.png": "/dream-team/static/media/mercy.c2e1e8e6.png",
     "static/media/moira.edb33317.png": "/dream-team/static/media/moira.edb33317.png",
     "static/media/orisa.c0bc105e.png": "/dream-team/static/media/orisa.c0bc105e.png",
+    "static/media/ow2.e35da8cb.png": "/dream-team/static/media/ow2.e35da8cb.png",
     "static/media/pepe.ab8abdb3.png": "/dream-team/static/media/pepe.ab8abdb3.png",
+    "static/media/pepehands.cc5fe3ed.png": "/dream-team/static/media/pepehands.cc5fe3ed.png",
     "static/media/pharah.8cc7b8a0.png": "/dream-team/static/media/pharah.8cc7b8a0.png",
     "static/media/reaper.d9ea5653.png": "/dream-team/static/media/reaper.d9ea5653.png",
     "static/media/reinhardt.5010347a.png": "/dream-team/static/media/reinhardt.5010347a.png",
@@ -57,8 +59,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.e9b74995.js",
-    "static/js/2.66feda2e.chunk.js",
+    "static/js/2.230e3bf2.chunk.js",
     "static/css/main.2d455af6.chunk.css",
-    "static/js/main.dedaa7b4.chunk.js"
+    "static/js/main.d0b181a6.chunk.js"
   ]
 }

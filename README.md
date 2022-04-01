@@ -3,4 +3,4 @@
 Commands:
 
 npm start -> Run for dev
-npm deploy -> Deploy to github
+npm run deploy -> Deploy to github
